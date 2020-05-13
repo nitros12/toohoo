@@ -7,7 +7,7 @@ use amethyst::{
     window::ScreenDimensions,
 };
 
-use crate::components::Pointer;
+use crate::components::{CappedVelocity, Pointer, Acceleration, Velocity, Friction};
 use log::info;
 
 pub const ARENA_HEIGHT: f32 = 500.0;
@@ -78,6 +78,10 @@ fn init_pointer(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) {
     world
         .create_entity()
         .with(Pointer)
+        .with(Velocity::default())
+        .with(Acceleration::default())
+        .with(CappedVelocity::new_mag_abs(12.0))
+        .with(Friction::new(0.6))
         .with(trans)
         .with(sprite_render)
         .build();
